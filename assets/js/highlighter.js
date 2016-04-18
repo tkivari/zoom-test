@@ -5,8 +5,8 @@
 			if (e.originalEvent.touches && e.originalEvent.touches.length == 2) {
 				if (highlighter.fingers_down) {
 					console.log('here')
-					highlighter.finger_1_start = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-					highlighter.finger_2_start = { x: event.touches[1].clientX, y: event.touches[1].clientY };
+					highlighter.finger_1_start = { x: e.originalEvent.touches[0].clientX, y: e.originalEvent.touches[0].clientY };
+					highlighter.finger_2_start = { x: e.originalEvent.touches[1].clientX, y: e.originalEvent.touches[1].clientY };
 					highlighter.fingers_down = false;
 				} else {
 					highlighter.finger_1_end = { x: e.originalEvent.touches[0].clientX, y: e.originalEvent.touches[0].clientY };
@@ -216,7 +216,7 @@
   			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_1_end.y - this.finger_2_end.y, 2));
   			if (distance_1 && distance_2) {
 	  			console.log("2: " + distance_2);
-	  			this.ratio = (distance_2 * 0.8 / distance_1 * 0.8);
+	  			this.ratio = (distance_2 / distance_1);
 	  			context.scale(this.ratio, this.ratio);
 	  			console.log("ratio: " + this.ratio);
 	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
