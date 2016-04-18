@@ -216,7 +216,7 @@
   			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_2_end.y - this.finger_2_end.y, 2));
   			console.log("2: " + distance_2);
   			this.ratio = distance_2 / distance_1;
-  			context.scale(this.ratio, this.ratio);
+  			context.scale(this.ratio, 1);
   			console.log(this.ratio);
   			scale *= this.ratio;
 		}
@@ -224,7 +224,7 @@
 		this.redrawCanvas = function(image) {
 			highlighter.clear();
 			context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
-			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width * highlighter.ratio, image.height * highlighter.ratio);
+			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width, image.height);
 			
 			context.strokeStyle = 'rgba(228, 244, 56, .8)';
 			context.fillStyle = 'rgba(228, 244, 56, 0.35)';
