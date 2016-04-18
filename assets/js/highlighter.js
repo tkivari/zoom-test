@@ -2,9 +2,9 @@
 		
 		this.moveHandler = function(e) {
 			e.preventDefault();
-			console.log(e.originalEvent.touches.length);
 			if (e.originalEvent.touches && e.originalEvent.touches.length == 2) {
 				if (highlighter.fingers_down) {
+					console.log('here')
 					highlighter.finger_1_start = { x: event.touches[0].clientX, y: event.touches[0].clientY };
 					highlighter.finger_2_start = { x: event.touches[1].clientX, y: event.touches[1].clientY };
 					highlighter.fingers_down = false;
@@ -32,7 +32,7 @@
 		
 		this.downHandler = function(e) {
 			e.preventDefault();
-			if (e.touches && e.touches.length == 2) {
+			if (e.originalEvent.touches) {
 				// this is a pinch, not a click or a tap
 				if (!highlighter.isInDrawMode) {
 					highlighter.fingers_down = true;				
