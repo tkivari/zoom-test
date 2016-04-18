@@ -217,7 +217,7 @@
   			console.log("2: " + distance_2);
   			this.ratio = distance_2 / distance_1;
   			context.scale(this.ratio, this.ratio);
-  			console.log(scale);
+  			console.log(this.ratio);
   			scale *= this.ratio;
 		}
 		
