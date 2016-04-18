@@ -4,8 +4,14 @@
 			e.preventDefault();
 			console.log(e.originalEvent.touches.length);
 			if (e.originalEvent.touches && e.originalEvent.touches.length == 2) {
-				highlighter.finger_1_end = { x: e.originalEvent.touches[0].clientX, y: e.originalEvent.touches[0].clientY };
-				highlighter.finger_2_end = { x: e.originalEvent.touches[1].clientX, y: e.originalEvent.touches[1].clientY };
+				if (highlighter.fingers_down) {
+					highlighter.finger_1_start = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+					highlighter.finger_2_start = { x: event.touches[1].clientX, y: event.touches[1].clientY };
+					highlighter.fingers_down = false;
+				} else {
+					highlighter.finger_1_end = { x: e.originalEvent.touches[0].clientX, y: e.originalEvent.touches[0].clientY };
+					highlighter.finger_2_end = { x: e.originalEvent.touches[1].clientX, y: e.originalEvent.touches[1].clientY };
+				}
 				
 				highlighter.calculatePinchZoom();
 			} else {
@@ -29,9 +35,7 @@
 			if (e.touches && e.touches.length == 2) {
 				// this is a pinch, not a click or a tap
 				if (!highlighter.isInDrawMode) {
-					highlighter.finger_1_start = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-					highlighter.finger_2_start = { x: event.touches[1].clientX, y: event.touches[1].clientY };
-				
+					highlighter.fingers_down = true;				
 				}
 			} else {
 				var x = e.pageX ? e.pageX : e.originalEvent.targetTouches[0].pageX;
@@ -87,6 +91,7 @@
 		this.finger_2_start = { x: 0, y: 0};
 		this.finger_1_end   = { x: 0, y: 0};
 		this.finger_2_end   = { x: 0, y: 0};
+		this.fingers_down = false;
 				
 		this.eventHandlers = new EventHandlers(this);
 		
