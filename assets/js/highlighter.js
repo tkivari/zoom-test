@@ -92,6 +92,7 @@
 		this.finger_1_end   = { x: 0, y: 0};
 		this.finger_2_end   = { x: 0, y: 0};
 		this.fingers_down = false;
+		this.ratio = 1;
 				
 		this.eventHandlers = new EventHandlers(this);
 		
@@ -214,8 +215,8 @@
 			console.log("1: " + distance_1);
   			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_2_end.y - this.finger_2_end.y, 2));
   			console.log("2: " + distance_2);
-  			var zoom = distance_2 / distance_1;
-  			context.scale(zoom, zoom);
+  			this.ratio = distance_2 / distance_1;
+  			context.scale(this.ratio, this.ratio);
   			console.log(scale);
   			scale *= zoom;
 		}
@@ -223,7 +224,7 @@
 		this.redrawCanvas = function(image) {
 			highlighter.clear();
 			context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
-			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width, image.height);
+			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width * highlighter.ratio, image.height * highlighter.ratio);
 			
 			context.strokeStyle = 'rgba(228, 244, 56, .8)';
 			context.fillStyle = 'rgba(228, 244, 56, 0.35)';
