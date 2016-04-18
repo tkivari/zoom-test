@@ -4,8 +4,8 @@
 			e.preventDefault();
 			//alert(e.originalEvent.touches.length);
 			if (e.originalEvent.touches && e.originalEvent.touches.length == 2) {
-				highlighter.finger_1_end = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-				highlighter.finger_2_end = { x: event.touches[1].clientX, y: event.touches[1].clientY };
+				highlighter.finger_1_end = { x: event.originalEvent.touches[0].clientX, y: event.originalEvent.touches[0].clientY };
+				highlighter.finger_2_end = { x: event.originalEvent.touches[1].clientX, y: event.originalEvent.touches[1].clientY };
 				
 				highlighter.calculatePinchZoom();
 			} else {
@@ -207,6 +207,7 @@
 		}
 		
 		this.calculatePinchZoom = function() {
+			alert('here');
 			var distance_1 = Math.sqrt(Math.pow(finger_1_start.x - finger_2_start.x, 2) + Math.pow(finger_1_start.y - finger_2_start.y, 2));
   			var distance_2 = Math.sqrt(Math.pow(finger_1_end.x - finger_2_end.x, 2) + Math.pow(finger_2_end.y - finger_2_end.y, 2));
 
