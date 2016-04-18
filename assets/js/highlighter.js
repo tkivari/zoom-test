@@ -25,12 +25,12 @@
 		
 		this.downHandler = function(e) {
 			e.preventDefault();
-			
+			alert('first');
 			if (e.touches && e.touches.length == 2) {
-				alert('asdf');
+				alert('second');
 				// this is a pinch, not a click or a tap
 				if (!highlighter.isInDrawMode) {
-					alert('here');
+					alert('third');
 					highlighter.finger_1_start = { x: event.touches[0].clientX, y: event.touches[0].clientY };
 					highlighter.finger_2_start = { x: event.touches[1].clientX, y: event.touches[1].clientY };
 				
