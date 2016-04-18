@@ -219,7 +219,7 @@
 	  			this.ratio = (distance_2 / distance_1);
 	  			context.scale(this.ratio, this.ratio);
 	  			console.log("ratio: " + this.ratio);
-	  			// scale *= this.ratio;
+	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
   			}
 		}
 		
