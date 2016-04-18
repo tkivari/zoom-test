@@ -7,18 +7,18 @@
 				highlighter.finger_2_end = { x: event.touches[1].clientX, y: event.touches[1].clientY };
 				
 				highlighter.calculatePinchZoom();
-			}
-			
-			var x = e.pageX ? e.pageX : e.originalEvent.targetTouches[0].pageX;
-			var y = e.pageY ? e.pageY : e.originalEvent.targetTouches[0].pageY;
-			if (highlighter.isInDrawMode) {
-				if (highlighter.isDrawing) {
-					highlighter.addClick(x - highlighter.offsetX, y - highlighter.offsetY, true);
-				}
 			} else {
-				if (highlighter.isDragging) {
-					highlighter.dragEnd = [x, y];
-					highlighter.calculateMovementCoords(x, y);
+				var x = e.pageX ? e.pageX : e.originalEvent.targetTouches[0].pageX;
+				var y = e.pageY ? e.pageY : e.originalEvent.targetTouches[0].pageY;
+				if (highlighter.isInDrawMode) {
+					if (highlighter.isDrawing) {
+						highlighter.addClick(x - highlighter.offsetX, y - highlighter.offsetY, true);
+					}
+				} else {
+					if (highlighter.isDragging) {
+						highlighter.dragEnd = [x, y];
+						highlighter.calculateMovementCoords(x, y);
+					}
 				}
 			}
 		}
