@@ -223,6 +223,7 @@
 		
 		this.redrawCanvas = function(image) {
 			highlighter.clear();
+			console.log('redrawing');
 			context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
 			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width, image.height);
 			
