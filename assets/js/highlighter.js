@@ -208,7 +208,9 @@
 		
 		this.calculatePinchZoom = function() {
 			var distance_1 = Math.sqrt(Math.pow(finger_1_start.x - finger_2_start.x, 2) + Math.pow(finger_1_start.y - finger_2_start.y, 2));
+			alert("1: " + distance_1);
   			var distance_2 = Math.sqrt(Math.pow(finger_1_end.x - finger_2_end.x, 2) + Math.pow(finger_2_end.y - finger_2_end.y, 2));
+  			alert("2: " + distance_2);
   			scale *= distance_2 / distance_1;
   			alert(scale);
 		}
