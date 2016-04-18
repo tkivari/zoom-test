@@ -2,6 +2,7 @@
 		
 		this.moveHandler = function(e) {
 			e.preventDefault();
+			alert(e.originalEvent.touches.length);
 			if (e.touches && e.touches.length == 2) {
 				highlighter.finger_1_end = { x: event.touches[0].clientX, y: event.touches[0].clientY };
 				highlighter.finger_2_end = { x: event.touches[1].clientX, y: event.touches[1].clientY };
@@ -25,7 +26,6 @@
 		
 		this.downHandler = function(e) {
 			e.preventDefault();
-			alert(e.originalEvent.touches.length);
 			if (e.touches && e.touches.length == 2) {
 				alert('second');
 				// this is a pinch, not a click or a tap
