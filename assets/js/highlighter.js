@@ -4,11 +4,12 @@
 			e.preventDefault();
 			if (e.originalEvent.touches && e.originalEvent.touches.length == 2) {
 				if (highlighter.fingers_down) {
-					console.log('here')
 					highlighter.finger_1_start = { x: e.originalEvent.touches[0].clientX, y: e.originalEvent.touches[0].clientY };
 					highlighter.finger_2_start = { x: e.originalEvent.touches[1].clientX, y: e.originalEvent.touches[1].clientY };
 					highlighter.fingers_down = false;
 				} else {
+					if (highlighter.finger_1_end) highlighter.finger_1_start = highlighter.finger_1_end;
+					if (highlighter.finger_2_end) highlighter.finger_2_start = highlighter.finger_2_end;
 					highlighter.finger_1_end = { x: e.originalEvent.touches[0].clientX, y: e.originalEvent.touches[0].clientY };
 					highlighter.finger_2_end = { x: e.originalEvent.touches[1].clientX, y: e.originalEvent.touches[1].clientY };
 				}
