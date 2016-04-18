@@ -216,7 +216,7 @@
   			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_1_end.y - this.finger_2_end.y, 2));
   			if (distance_1 && distance_2) {
 	  			console.log("2: " + distance_2);
-	  			this.ratio = (distance_2 / distance_1)-1 < 0 ? 0 : (distance_2 / distance_1)-1 ;
+	  			this.ratio = (distance_2 / distance_1);
 	  			context.scale(this.ratio, this.ratio);
 	  			console.log("ratio: " + this.ratio);
 	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
