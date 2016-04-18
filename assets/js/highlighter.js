@@ -218,7 +218,7 @@
   			this.ratio = distance_2 / distance_1;
   			context.scale(this.ratio, this.ratio);
   			console.log(scale);
-  			scale *= zoom;
+  			scale *= this.ratio;
 		}
 		
 		this.redrawCanvas = function(image) {
