@@ -28,8 +28,8 @@
 			
 			if (e.touches && e.touches.length == 2) {
 				// this is a pinch, not a click or a tap
-				if (highlighter.isInDrawMode) {
-					
+				if (!highlighter.isInDrawMode) {
+					alert('here');
 					highlighter.finger_1_start = { x: event.touches[0].clientX, y: event.touches[0].clientY };
 					highlighter.finger_2_start = { x: event.touches[1].clientX, y: event.touches[1].clientY };
 				
