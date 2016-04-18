@@ -2,10 +2,9 @@
 		
 		this.moveHandler = function(e) {
 			e.preventDefault();
-			//alert(e.originalEvent.touches.length);
+			console.log(e.originalEvent.touches.length);
 			if (e.originalEvent.touches && e.originalEvent.touches.length == 2) {
 				console.log('here');
-				alert('here');
 				highlighter.finger_1_end = { x: e.originalEvent.touches[0].clientX, y: e.originalEvent.touches[0].clientY };
 				highlighter.finger_2_end = { x: e.originalEvent.touches[1].clientX, y: e.originalEvent.touches[1].clientY };
 				
@@ -29,10 +28,8 @@
 		this.downHandler = function(e) {
 			e.preventDefault();
 			if (e.touches && e.touches.length == 2) {
-				alert('second');
 				// this is a pinch, not a click or a tap
 				if (!highlighter.isInDrawMode) {
-					alert('third');
 					highlighter.finger_1_start = { x: event.touches[0].clientX, y: event.touches[0].clientY };
 					highlighter.finger_2_start = { x: event.touches[1].clientX, y: event.touches[1].clientY };
 				
@@ -209,12 +206,12 @@
 		}
 		
 		this.calculatePinchZoom = function() {
-			var distance_1 = Math.sqrt(Math.pow(finger_1_start.x - finger_2_start.x, 2) + Math.pow(finger_1_start.y - finger_2_start.y, 2));
-			alert("1: " + distance_1);
-  			var distance_2 = Math.sqrt(Math.pow(finger_1_end.x - finger_2_end.x, 2) + Math.pow(finger_2_end.y - finger_2_end.y, 2));
-  			alert("2: " + distance_2);
+			var distance_1 = Math.sqrt(Math.pow(this.finger_1_start.x - this.finger_2_start.x, 2) + Math.pow(this.finger_1_start.y - this.finger_2_start.y, 2));
+			console.log("1: " + distance_1);
+  			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_2_end.y - this.finger_2_end.y, 2));
+  			console.log("2: " + distance_2);
   			scale *= distance_2 / distance_1;
-  			alert(scale);
+  			console.log(scale);
 		}
 		
 		this.redrawCanvas = function(image) {
