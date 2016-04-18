@@ -37,17 +37,17 @@
 				if (!highlighter.isInDrawMode) {
 					highlighter.fingers_down = true;				
 				}
-			} else {
-				var x = e.pageX ? e.pageX : e.originalEvent.targetTouches[0].pageX;
-				var y = e.pageY ? e.pageY : e.originalEvent.targetTouches[0].pageY;
-				if (highlighter.isInDrawMode) {
-					highlighter.isDrawing = true;
-					highlighter.addClick(x - highlighter.offsetX, y - highlighter.offsetY);
-				} else {
-					highlighter.isDragging = true;
-					highlighter.dragStart = [x, y];
-				}
 			}
+			var x = e.pageX ? e.pageX : e.originalEvent.targetTouches[0].pageX;
+			var y = e.pageY ? e.pageY : e.originalEvent.targetTouches[0].pageY;
+			if (highlighter.isInDrawMode) {
+				highlighter.isDrawing = true;
+				highlighter.addClick(x - highlighter.offsetX, y - highlighter.offsetY);
+			} else {
+				highlighter.isDragging = true;
+				highlighter.dragStart = [x, y];
+			}
+			
 		}
 		
 		this.upHandler = function(e) {
