@@ -97,8 +97,8 @@
 		this.eventHandlers = new EventHandlers(this);
 		
 		this.canvas = document.getElementById("highlighter");
-//		this.canvas.width  = window.innerWidth;
-//		this.canvas.height = window.innerHeight;
+		this.canvas.width  = window.innerWidth;
+		this.canvas.height = window.innerHeight;
 		var canvasOffset = $("#highlighter").offset();
 		this.offsetX = canvasOffset.left;
 		this.offsetY = canvasOffset.top;
