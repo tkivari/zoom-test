@@ -214,7 +214,7 @@
 			console.log("1: " + distance_1);
   			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_2_end.y - this.finger_2_end.y, 2));
   			console.log("2: " + distance_2);
-  			scale *= distance_2 / distance_1;
+  			scale = distance_2 / distance_1;
   			console.log(scale);
 		}
 		
