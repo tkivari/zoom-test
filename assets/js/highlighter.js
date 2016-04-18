@@ -4,7 +4,6 @@
 			e.preventDefault();
 			console.log(e.originalEvent.touches.length);
 			if (e.originalEvent.touches && e.originalEvent.touches.length == 2) {
-				console.log('here');
 				highlighter.finger_1_end = { x: e.originalEvent.touches[0].clientX, y: e.originalEvent.touches[0].clientY };
 				highlighter.finger_2_end = { x: e.originalEvent.touches[1].clientX, y: e.originalEvent.touches[1].clientY };
 				
