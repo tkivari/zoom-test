@@ -25,7 +25,7 @@
 		
 		this.downHandler = function(e) {
 			e.preventDefault();
-			alert('first');
+			alert(e.touches.length);
 			if (e.touches && e.touches.length == 2) {
 				alert('second');
 				// this is a pinch, not a click or a tap
