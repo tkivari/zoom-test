@@ -211,13 +211,13 @@
 		}
 		
 		this.calculatePinchZoom = function() {
-			var distance_1 = Math.sqrt(Math.pow(this.finger_1_start.x - this.finger_2_start.x, 2) + Math.pow(this.finger_1_start.y - this.finger_2_start.y, 2));
+			var distance_1 = Math.sqrt(Math.pow(this.finger_1_start.x - this.finger_2_start.x, 2) + Math.pow(this.finger_1_start.y - this.finger_2_start.y, 2)) /2;
 			console.log("1: " + distance_1);
-  			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_1_end.y - this.finger_2_end.y, 2));
+  			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_1_end.y - this.finger_2_end.y, 2)) /2;
   			if (distance_1 && distance_2) {
 	  			console.log("2: " + distance_2);
 	  			this.ratio = distance_2 / distance_1;
-	  			context.scale(this.ratio/2, this.ratio/2);
+	  			context.scale(this.ratio, this.ratio);
 	  			console.log("ratio: " + this.ratio);
 	  			scale *= this.ratio;
   			}
