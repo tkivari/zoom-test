@@ -225,13 +225,13 @@
 	  			}
 	  			
 	  			context.scale(this.ratio, this.ratio);
-	  			originx = highlighter.origin.x/(scale*this.ratio) - highlighter.origin.x/scale;
-	  			originy = highlighter.origin.y/(scale*this.ratio) - highlighter.origin.y/scale;
+	  			originx = highlighter.origin.x;
+	  			originy = highlighter.origin.y;
 
 	  			if (highlighter.origin) {
 	  				context.translate(-highlighter.origin.x, -highlighter.origin.y)
 	  			}
-	  			//scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
+	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
   			}
 		}
 		
