@@ -193,7 +193,7 @@
 		    var mx = e.clientX - canvas.offsetLeft;
 		    var my = e.clientY - canvas.offsetTop;
 		    
-		    var wheel = event.wheelDelta/120;
+		    var wheel = e.wheelDelta/120;
 		    var zoom = Math.exp(wheel*zoomIntensity);
 
 		    console.log("zoom: " + zoom);
