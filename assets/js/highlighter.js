@@ -225,6 +225,8 @@
 	  			}
 	  			
 	  			context.scale(this.ratio, this.ratio);
+	  			originx = highlighter.origin.x;
+	  			originy = highlighter.origin.y;
 
 	  			if (highlighter.origin) {
 	  				context.translate(-highlighter.origin.x, -highlighter.origin.y)
@@ -235,9 +237,6 @@
 		
 		this.redrawCanvas = function(image) {
 			highlighter.clear();
-			var p1 = context.transformedPoint(0,0);
-			var p2 = context.transformedPoint(canvas.width,canvas.height);
-			context.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
 			context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
 			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width, image.height);
 			
