@@ -224,7 +224,7 @@
   			if (distance_1 && distance_2) {
 	  			this.ratio = (distance_2 / distance_1);
 	  			
-  			context.translate(originx, originy)
+  			context.translate(highlighter.origin.x, highlighter.origin.y)
   			
   			
   			context.scale(this.ratio, this.ratio);
@@ -236,7 +236,7 @@
 	    		console.log("y: " + originy);
   			}
 
-  			context.translate(-originx, -originy)
+  			context.translate(-highlighter.origin.x, -highlighter.origin.y)
   			
   			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
   			}
