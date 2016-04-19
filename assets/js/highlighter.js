@@ -221,7 +221,7 @@
 	  			
 	  			if (highlighter.origin) {
 	  				console.log(highlighter.origin);
-	  				context.translate(highlighter.origin.x, highlighter.origin.y)
+	  				context.translate(originx, originy)
 	  			}
 	  			
 	  			context.scale(this.ratio, this.ratio);
@@ -229,7 +229,7 @@
 	  			originy = highlighter.origin.y/(scale*this.ratio) - highlighter.origin.y/scale;
 
 	  			if (highlighter.origin) {
-	  				context.translate(-highlighter.origin.x, -highlighter.origin.y)
+	  				context.translate(-originx, -originy)
 	  			}
 	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
   			}
