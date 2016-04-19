@@ -174,7 +174,7 @@
 		});
 		
 		this.clear = function() {
-			context.clearRect(0, 0, window.InnerWidth, window.innerHeight);
+			context.clearRect(originx, originy, window.InnerWidth, window.innerHeight);
 			context.fillStyle = "#80807e";
 		}
 		
@@ -220,7 +220,7 @@
 	  			this.ratio = (distance_2 / distance_1);
 	  			
 	  			console.log(highlighter.origin);
-	  			context.translate(originx, originy)
+	  			context.translate(highlighterr.origin.x, highlighter.origin.y)
 	  			
 	  			
 	  			context.scale(this.ratio, this.ratio);
