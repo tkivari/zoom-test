@@ -225,8 +225,8 @@
 	  			}
 	  			
 	  			context.scale(this.ratio, this.ratio);
-	  			originx = originx/scale*this.ratio - originx/scale;
-	  			originy = originy/scale*this.ratio - originy/scale;
+	  			originx -= originx/scale*this.ratio - originx/scale;
+	  			originy -= originy/scale*this.ratio - originy/scale;
 
 	  			if (highlighter.origin) {
 	  				context.translate(-highlighter.origin.x, -highlighter.origin.y)
@@ -237,7 +237,7 @@
 		
 		this.redrawCanvas = function(image) {
 			highlighter.clear();
-			context.fillRect(0,0,canvas.width/scale,canvas.height/scale);
+			context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
 			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width, image.height);
 			
 			context.strokeStyle = 'rgba(228, 244, 56, .8)';
