@@ -148,7 +148,6 @@
 		
 		this.addClick = function(x, y, dragging, mouseup)
 		{
-//			console.log(x + ", " + y + ", " + dragging + ", " + mouseup);
 			this.clickX.push(x);
 			this.clickY.push(y);
 			this.clickDrag.push(dragging);
@@ -213,20 +212,16 @@
 		
 		this.calculatePinchZoom = function() {
 			var distance_1 = Math.sqrt(Math.pow(this.finger_1_start.x - this.finger_2_start.x, 2) + Math.pow(this.finger_1_start.y - this.finger_2_start.y, 2));
-			console.log("1: " + distance_1);
-  			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_1_end.y - this.finger_2_end.y, 2));
+			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_1_end.y - this.finger_2_end.y, 2));
   			if (distance_1 && distance_2) {
-	  			console.log("2: " + distance_2);
 	  			this.ratio = (distance_2 / distance_1);
 	  			context.scale(this.ratio, this.ratio);
-	  			console.log("ratio: " + this.ratio);
 	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
   			}
 		}
 		
 		this.redrawCanvas = function(image) {
 			highlighter.clear();
-			console.log('scale: ' + scale);
 			context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
 			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width, image.height);
 			
@@ -243,7 +238,6 @@
 				}
 				
 				if (highlighter.clickEnd[i] == true) {
-					//console.log('i: ' + i);
 					context.lineTo(highlighter.clickX[line_start], highlighter.clickY[line_start]);
 					context.fill();
 					context.stroke();
