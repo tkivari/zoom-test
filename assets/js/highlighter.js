@@ -231,7 +231,7 @@
 	  			if (highlighter.origin) {
 		  			originx -= highlighter.origin.x/scale*this.ratio;
 		  			originy -= highlighter.origin.y/scale*this.ratio;
-		  			console.log("zoom: " + zoom);
+		  			console.log("zoom: " + this.ratio);
 		    		console.log("x: " + originx);
 		    		console.log("y: " + originy);
 	  			}
