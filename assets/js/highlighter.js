@@ -224,7 +224,7 @@
   			if (distance_1 && distance_2) {
 	  			this.ratio = (distance_2 / distance_1);
 	  			
-  			context.translate(highlighter.origin.x, highlighter.origin.y)
+  			context.translate(originx, originy)
   			
   			
   			context.scale(this.ratio, this.ratio);
