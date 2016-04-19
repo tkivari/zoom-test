@@ -195,6 +195,11 @@
 		    
 		    var wheel = event.wheelDelta/120;
 		    var zoom = Math.exp(wheel*zoomIntensity);
+
+		    console.log("zoom: " + zoom);
+		    console.log("x: " + originx);
+		    console.log("y: " + originy);
+
 		    
 		    // Translate so the visible origin is at the context's origin.
 		    context.translate(originx, originy);
@@ -225,7 +230,7 @@
 	  			context.scale(this.ratio, this.ratio);
 	  			if (highlighter.origin) {
 		  			console.log(highlighter.origin);
-		  			originx = highlighter.origin.x/scale;
+		  			originx -= highlighter.origin.x/scale;
 		  			originy = highlighter.origin.y/scale;
 	  			}
 
@@ -237,7 +242,7 @@
 		
 		this.redrawCanvas = function(image) {
 			highlighter.clear();
-			//context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
+			context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
 			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width, image.height);
 			
 			context.strokeStyle = 'rgba(228, 244, 56, .8)';
