@@ -218,15 +218,14 @@
 			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_1_end.y - this.finger_2_end.y, 2));
   			if (distance_1 && distance_2) {
 	  			this.ratio = (distance_2 / distance_1);
+	  			
 	  			if (highlighter.origin) {
 	  				console.log(highlighter.origin);
 	  				context.translate(highlighter.origin.x, highlighter.origin.y)
 	  			}
+	  			
 	  			context.scale(this.ratio, this.ratio);
 
-	  			highlighter.origin.x -= highlighter.origin.x/(scale*this.ratio) - highlighter.origin.x/this.ratio;
-	  			highlighter.origin.y -= highlighter.origin.y/(scale*this.ratio) - highlighter.origin.y/this.ratio;
-	  			
 	  			if (highlighter.origin) {
 	  				context.translate(-highlighter.origin.x, -highlighter.origin.y)
 	  			}
@@ -236,7 +235,7 @@
 		
 		this.redrawCanvas = function(image) {
 			highlighter.clear();
-			context.fillRect(originx,originy,canvas.width,canvas.height);
+			context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
 			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width, image.height);
 			
 			context.strokeStyle = 'rgba(228, 244, 56, .8)';
