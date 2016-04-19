@@ -219,12 +219,12 @@
   			if (distance_1 && distance_2) {
 	  			this.ratio = (distance_2 / distance_1);
 	  			
-	  			console.log(highlighter.origin);
 	  			context.translate(highlighter.origin.x, highlighter.origin.y)
 	  			
 	  			
 	  			context.scale(this.ratio, this.ratio);
 	  			if (highlighter.origin) {
+		  			console.log(highlighter.origin);
 		  			originx -= highlighter.origin.x/scale*this.ratio - highlighter.origin.x/scale;
 		  			originy -= highlighter.origin.y/scale*this.ratio - highlighter.origin.y/scale;
 	  			}
