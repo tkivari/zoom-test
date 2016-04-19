@@ -227,8 +227,8 @@
 	  			context.translate(highlighter.origin.x, highlighter.origin.y)
 	  			
 	  			if (highlighter.origin) {
-		  			originx = highlighter.origin.x/(scale*this.ratio) - highlighter.origin.x/scale;
-		  			originy = highlighter.origin.y/(scale*this.ratio) - highlighter.origin.y/scale;
+		  			originx -= originx/(scale*this.ratio) - originx/scale;
+		  			originy -= originy/(scale*this.ratio) - originy/scale;
 		  			highlighter.origin.x -= highlighter.origin.x/(scale*this.ratio) - highlighter.origin.x/scale;
 		  			highlighter.origin.y -= highlighter.origin.y/(scale*this.ratio) - highlighter.origin.y/scale;
 		  			console.log("zoom: " + this.ratio);
