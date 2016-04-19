@@ -224,21 +224,21 @@
   			if (distance_1 && distance_2) {
 	  			this.ratio = (distance_2 / distance_1);
 	  			
-	  			context.translate(highlighter.origin.x, highlighter.origin.y)
-	  			
-	  			
-	  			context.scale(this.ratio, this.ratio);
-	  			if (highlighter.origin) {
-		  			originx -= highlighter.origin.x/scale*this.ratio;
-		  			originy -= highlighter.origin.y/scale*this.ratio;
-		  			console.log("zoom: " + this.ratio);
-		    		console.log("x: " + originx);
-		    		console.log("y: " + originy);
-	  			}
+  			context.translate(highlighter.origin.x, highlighter.origin.y)
+  			
+  			
+  			context.scale(this.ratio, this.ratio);
+  			if (highlighter.origin) {
+	  			originx -= highlighter.origin.x/scale*this.ratio - highlighter.origin.x/scale;
+	  			originy -= highlighter.origin.y/scale*this.ratio - highlighter.origin.y/scale;
+	  			console.log("zoom: " + this.ratio);
+	    		console.log("x: " + originx);
+	    		console.log("y: " + originy);
+  			}
 
-	  			context.translate(-originx, -originy)
-	  			
-	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
+  			context.translate(-originx, -originy)
+  			
+  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
   			}
 		}
 		
