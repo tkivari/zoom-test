@@ -6,6 +6,7 @@
 				if (highlighter.fingers_down) {
 					highlighter.finger_1_start = { x: e.originalEvent.touches[0].clientX, y: e.originalEvent.touches[0].clientY };
 					highlighter.finger_2_start = { x: e.originalEvent.touches[1].clientX, y: e.originalEvent.touches[1].clientY };
+					highlighter.origin = { x: (e.originalEvent.touches[0].clientX + e.originalEvent.touches[1].clientX) / 2, y: (e.originalEvent.touches[0].clientY + e.originalEvent.touches[1].clientY) / 2 }
 					highlighter.fingers_down = false;
 				} else {
 					if (highlighter.finger_1_end) highlighter.finger_1_start = highlighter.finger_1_end;
@@ -53,6 +54,7 @@
 		
 		this.upHandler = function(e) {
 			e.preventDefault();
+			highlighter.origin = null;
 			if (highlighter.isInDrawMode) {
 				highlighter.isDrawing = false;
 				var x = e.pageX ? e.pageX : e.originalEvent.changedTouches[0].pageX;
@@ -94,6 +96,7 @@
 		this.finger_2_end   = { x: 0, y: 0};
 		this.fingers_down = false;
 		this.ratio = 1;
+		this.origin = null;
 				
 		this.eventHandlers = new EventHandlers(this);
 		
@@ -216,6 +219,9 @@
   			if (distance_1 && distance_2) {
 	  			this.ratio = (distance_2 / distance_1);
 	  			context.scale(this.ratio, this.ratio);
+	  			if (highlighter.origin) {
+	  				context.translate(highlighter.origin.x, highlighter.origin.y)
+	  			}
 	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
   			}
 		}
