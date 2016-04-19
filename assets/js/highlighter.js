@@ -141,10 +141,10 @@
 //			console.log(highlighter.clickX);
 //			console.log(highlighter.clickY);
 			// AHHH
-//			for(var i=0; i < highlighter.clickX.length; i++) {
-//				highlighter.clickX[i] = parseInt(highlighter.clickX[i] + (highlighter.dragStart[0] - highlighter.dragEnd[0]));;
-//				highlighter.clickY[i] = parseInt(highlighter.clickY[i] + (highlighter.dragStart[1] - highlighter.dragEnd[1]));
-//			}
+			for(var i=0; i < highlighter.clickX.length; i++) {
+				highlighter.clickX[i] = parseInt(highlighter.clickX[i] + (highlighter.dragStart[0] - highlighter.dragEnd[0]));
+				highlighter.clickY[i] = parseInt(highlighter.clickY[i] + (highlighter.dragStart[1] - highlighter.dragEnd[1]));
+			}
 //			console.log(highlighter.clickX);
 //			console.log(highlighter.clickY);
 		}
