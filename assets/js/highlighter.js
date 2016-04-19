@@ -229,7 +229,7 @@
 		  			originy -= highlighter.origin.y/scale*this.ratio - highlighter.origin.y/scale;
 	  			}
 
-	  			context.translate(-originx, -originy)
+	  			context.translate(-highlighter.origin.x, -highlighter.origin.y)
 	  			
 	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
   			}
