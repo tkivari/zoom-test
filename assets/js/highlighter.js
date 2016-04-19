@@ -226,20 +226,23 @@
 	  			
 	  			context.translate(highlighter.origin.x, highlighter.origin.y)
 	  			
+	  			if (highlighter.origin) {
+		  			originx -= highlighter.origin.x/scale*this.ratio - highlighter.origin.x/scale;
+		  			originy -= highlighter.origin.y/scale*this.ratio - highlighter.origin.y/scale;
+		  			highlighter.origin.x -= highlighter.origin.x/scale*this.ratio - highlighter.origin.x/scale;
+		  			highlighter.origin.y -= highlighter.origin.y/scale*this.ratio - highlighter.origin.y/scale;
+		  			console.log("zoom: " + this.ratio);
+		    		console.log("x: " + originx);
+		    		console.log("y: " + originy);
+	  			}
 	  			
 	  			context.scale(this.ratio, this.ratio);
 	  			
 	  			context.translate(-highlighter.origin.x, -highlighter.origin.y)
 	  			
-	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
+	  			scale *= this.ratio; // redraw the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
 
-	  			if (highlighter.origin) {
-		  			originx -= highlighter.origin.x/scale*this.ratio - highlighter.origin.x/scale;
-		  			originy -= highlighter.origin.y/scale*this.ratio - highlighter.origin.y/scale;
-		  			console.log("zoom: " + this.ratio);
-		    		console.log("x: " + originx);
-		    		console.log("y: " + originy);
-	  			}
+	  			
   			}
 		}
 		
