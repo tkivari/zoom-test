@@ -224,21 +224,21 @@
   			if (distance_1 && distance_2) {
 	  			this.ratio = (distance_2 / distance_1);
 	  			
-	  			context.translate(highlighter.origin.x, highlighter.origin.y)
+	  			//context.translate(highlighter.origin.x, highlighter.origin.y)
 	  			
-	  			if (highlighter.origin) {
-		  			originx = highlighter.origin.x/(scale*this.ratio) - highlighter.origin.x/scale;
-		  			originy = highlighter.origin.y/(scale*this.ratio) - highlighter.origin.y/scale;
-		  			highlighter.origin.x -= highlighter.origin.x/(scale*this.ratio) - highlighter.origin.x/scale;
-		  			highlighter.origin.y -= highlighter.origin.y/(scale*this.ratio) - highlighter.origin.y/scale;
-		  			console.log("zoom: " + this.ratio);
-		    		console.log("x: " + originx);
-		    		console.log("y: " + originy);
-	  			}
+	  			// if (highlighter.origin) {
+		  		// 	originx = highlighter.origin.x/(scale*this.ratio) - highlighter.origin.x/scale;
+		  		// 	originy = highlighter.origin.y/(scale*this.ratio) - highlighter.origin.y/scale;
+		  		// 	highlighter.origin.x -= highlighter.origin.x/(scale*this.ratio) - highlighter.origin.x/scale;
+		  		// 	highlighter.origin.y -= highlighter.origin.y/(scale*this.ratio) - highlighter.origin.y/scale;
+		  		// 	console.log("zoom: " + this.ratio);
+		    // 		console.log("x: " + originx);
+		    // 		console.log("y: " + originy);
+	  			// }
 	  			
 	  			context.scale(this.ratio, this.ratio);
 	  			
-	  			context.translate(-highlighter.origin.x, -highlighter.origin.y)
+	  			//context.translate(-highlighter.origin.x, -highlighter.origin.y)
 	  			
 	  			scale *= this.ratio; // redraw the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
 
