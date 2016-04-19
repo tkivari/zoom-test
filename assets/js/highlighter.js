@@ -237,7 +237,7 @@
 		
 		this.redrawCanvas = function(image) {
 			highlighter.clear();
-			context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
+			//context.fillRect(originx,originy,canvas.width/scale,canvas.height/scale);
 			context.drawImage(image,-highlighter.mouseX, -highlighter.mouseY, image.width, image.height);
 			
 			context.strokeStyle = 'rgba(228, 244, 56, .8)';
