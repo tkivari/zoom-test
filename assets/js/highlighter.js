@@ -220,7 +220,7 @@
 	  			this.ratio = (distance_2 / distance_1);
 	  			
 	  			console.log(highlighter.origin);
-	  			context.translate(highlighterr.origin.x, highlighter.origin.y)
+	  			context.translate(highlighter.origin.x, highlighter.origin.y)
 	  			
 	  			
 	  			context.scale(this.ratio, this.ratio);
