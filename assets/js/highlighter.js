@@ -218,11 +218,13 @@
 			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_1_end.y - this.finger_2_end.y, 2));
   			if (distance_1 && distance_2) {
 	  			this.ratio = (distance_2 / distance_1);
+	  			console.log(highlighter.origin);
 	  			if (highlighter.origin) {
-	  				console.log(highlighter.origin);
-	  				context.translate(highlighter.origin.x, highlighter.origin.y)
+	  				context.translate(0,0);
 	  			}
 	  			context.scale(this.ratio, this.ratio);
+
+	  			// highlighter.origin.x -= 
 	  			if (highlighter.origin) {
 	  				context.translate(-highlighter.origin.x, -highlighter.origin.y)
 	  			}
