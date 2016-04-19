@@ -218,9 +218,13 @@
 			var distance_2 = Math.sqrt(Math.pow(this.finger_1_end.x - this.finger_2_end.x, 2) + Math.pow(this.finger_1_end.y - this.finger_2_end.y, 2));
   			if (distance_1 && distance_2) {
 	  			this.ratio = (distance_2 / distance_1);
+	  			if (highlighter.origin) {
+	  				console.log(highlighter.origin);
+	  				context.translate(highlighter.origin.x, highlighter.origin.y)
+	  			}
 	  			context.scale(this.ratio, this.ratio);
 	  			if (highlighter.origin) {
-	  				context.translate(highlighter.origin.x, highlighter.origin.y)
+	  				context.translate(-highlighter.origin.x, -highlighter.origin.y)
 	  			}
 	  			scale *= this.ratio; // redraws the empty rectangle at proper scaled size to avoid multiple instances of the image on the canvas
   			}
