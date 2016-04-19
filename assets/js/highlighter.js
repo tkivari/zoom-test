@@ -225,8 +225,8 @@
 	  			}
 	  			
 	  			context.scale(this.ratio, this.ratio);
-	  			originx = originx/scale*this.ratio;
-	  			originy = originy/scale*this.ratio;
+	  			originx = originx/scale*this.ratio - originx/scale;
+	  			originy = originy/scale*this.ratio - originy/scale;
 
 	  			if (highlighter.origin) {
 	  				context.translate(-highlighter.origin.x, -highlighter.origin.y)
