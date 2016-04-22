@@ -45,7 +45,7 @@ function EventHandlers(highlighter) {
 		var y = e.clientY ? e.clientY : e.originalEvent.targetTouches[0].pageY;
 		if (highlighter.isInDrawMode) {
 			highlighter.isDrawing = true;
-			highlighter.clearClicks();
+			//highlighter.clearClicks();
 			highlighter.addClick(x - highlighter.offsetX, y - highlighter.offsetY);
 		} else {
 			highlighter.isDragging = true;
@@ -63,6 +63,7 @@ function EventHandlers(highlighter) {
 			var x = e.pageX ? e.pageX : e.originalEvent.changedTouches[0].pageX;
 			var y = e.pageY ? e.pageY : e.originalEvent.changedTouches[0].pageY;
 			highlighter.addClick(x - highlighter.offsetX, y - highlighter.offsetY, null, true);
+			highlighter.setDrawMode(false);
 		} else {
 			highlighter.isDragging = false;
 			highlighter.resetCanvasContentCoords(highlighter.mouseX, highlighter.mouseY);
@@ -85,12 +86,14 @@ function Highlighter(img) {
 	this.isDrawing = false;
 	this.isInDrawMode = false;
 	this.isDragging = false;
+	this.redraw = true;
 	this.mouseX = 0;
 	this.mouseY = 0;
 	this.clickX = [];
 	this.clickY = [];
 	this.clickDrag = [];
 	this.clickEnd = [];
+	this.cropPadding = 50;
 	
 	/* some variables for calculating pinch zoom */
 	this.finger_1_start = { x: 0, y: 0 };
@@ -114,14 +117,6 @@ function Highlighter(img) {
 	this.dragStart = [this.startX, this.startY];
 	this.dragEnd = [this.startX, this.startY];
 	
-	this.matrix = [1,0,0,1,0,0];  // for tracking internal scaling/transform matrix (so we can calculate actual mouse position on zoomed canvas)\
-	this.inverse_matrix = [];
-	
-	var matrix = [1,0,0,1,0,0];
-	var inverse_matrix = [1,0,0,1];
-	
-	this.currentOrigin = { x: 0, y: 0 }; // track x & y origin for positioning mouse coordinates
-	
 	var canvas = this.canvas;
 	var context = this.canvas.getContext("2d");
 	
@@ -135,44 +130,42 @@ function Highlighter(img) {
 	
 	var highlighter = this;
 	
+	
+	/**
+	 * Crop the selected area of the receipt and return the data
+	 */
+	this.cropSelectedArea = function() {
+		//this.redraw = false;
+		var min_x = (Math.min.apply( Math, this.clickX ));
+		var max_x = (Math.max.apply( Math, this.clickX ));
+		var min_y = (Math.min.apply( Math, this.clickY ));
+		var max_y = (Math.max.apply( Math, this.clickY ));
+		
+		
+		highlighter.rect = {
+				min_x: (min_x)*scale - this.originx*scale,
+				min_y: (min_y)*scale - this.originy*scale,
+				width: ((max_x) - (min_x))*scale,
+				height: ((max_y) - (min_y))*scale
+		}
+		
+		console.log("scale: " + scale);
+		console.log(highlighter.rect);
+		
+		var image_data = context.getImageData(highlighter.rect.min_x,highlighter.rect.min_y,highlighter.rect.width,highlighter.rect.height);
+		context.putImageData(image_data, 70,70);
+		
+	}
+	
+	
 	/** perform the translate on the canvas, but also update our internal matrix */
 	this.translate = function(x,y) {
-		this.matrix[4] += this.matrix[0] * x + this.matrix[2] * y;
-	    this.matrix[5] += this.matrix[1] * x + this.matrix[3] * y;
 	    context.translate(x,y);
 	}
 	
 	/** perform the scale on the canvas, but also update our internal matrix */
 	this.scale = function(x,y) {
-		this.matrix[0] *= x;
-	    this.matrix[1] *= x;
-	    this.matrix[2] *= y;
-	    this.matrix[3] *= y;
-	    context.scale(x,y);
-	}
-	
-	this.createMatrix = function(x,y,scale,rotate) {
-		var m = matrix;
-		var im = inverse_matrix;
-		
-		// create the rotation and scale parts of the matrix
-	    m[3] =   m[0] = Math.cos(rotate) * scale;
-	    m[2] = -(m[1] = Math.sin(rotate) * scale);
-
-	    // add the translation
-	    m[4] = x;
-	    m[5] = y;
-
-	    // calculate the inverse transformation
-
-	    // first get the cross product of x axis and y axis
-	    cross = m[0] * m[3] - m[1] * m[2];
-
-	    // now get the inverted axis
-	    im[0] =  m[3] / cross;
-	    im[1] = -m[1] / cross;
-	    im[2] = -m[2] / cross;
-	    im[3] =  m[0] / cross;
+		context.scale(x,y);
 	}
 	
 	this.setDrawMode = function(draw_mode) 
@@ -194,13 +187,16 @@ function Highlighter(img) {
 		highlighter.mouseY = parseInt(highlighter.startY + (highlighter.dragStart[1] - highlighter.dragEnd[1]));
 		
 		for(var i=0; i < highlighter.clickX.length; ++i) {
-			highlighter.clickX[i] = parseInt(highlighter.clickX[i] - (highlighter.drawMoveStart[0] - highlighter.dragEnd[0]));
-			highlighter.clickY[i] = parseInt(highlighter.clickY[i] - (highlighter.drawMoveStart[1] - highlighter.dragEnd[1]));
+			var x = parseInt(highlighter.clickX[i] - (highlighter.drawMoveStart[0] - highlighter.dragEnd[0]));
+			var y = parseInt(highlighter.clickY[i] - (highlighter.drawMoveStart[1] - highlighter.dragEnd[1]));
+			var point = {x: x ,y: y };
+			highlighter.clickX[i] = point.x;
+			highlighter.clickY[i] = point.y;
 		}
 	}
 	
 	/**
-	 * Translates the coordinate values based on the current zoom level
+	 * Translates the coordinate values based on the current scale / translate values
 	 * 
 	 * @param x - the x coordinate
 	 * @param y - the y coordinate
@@ -208,36 +204,20 @@ function Highlighter(img) {
 	 */
 	this.translateCoordinate = function(x,y) {
 		
-		console.log("==========================");
-		console.log("scale: " + scale);
-		console.log('old coords');
-		console.log([x,y]);
-		
-		var rect = this.canvas.getBoundingClientRect();
-		console.log("offset X: " + this.originx);
-		console.log("offset Y: " + this.originy);
-		
-//		(x + this.offsetX)
-		
-//		var newX = ((x - rect.left) * this.matrix[0] + (y - rect.top) * this.matrix[2] + this.matrix[4]);
-//	    var newY = ((x - rect.left) * this.matrix[1] + (y - rect.top) * this.matrix[3] + this.matrix[5]);
-		
-//		var newX =  ((x + this.offsetX) * scale);
-//		var newY =  ((y + this.offsetY) * scale);
-		
-//		var newX = (x - this.originx);
-//		var newY = (y - this.originy);
-		
-//		var newX = (x - rect.left);
-//		var newY = (y - rect.top);
-		
 		var newX = (x) / scale + this.originx;
 		var newY = (y) / scale + this.originy;
 		
-		console.log('new coords');
-		console.log([newX, newY]);
-	    
 		return {x: newX, y: newY};
+	}
+	
+	this.updateCoordinates = function() {
+		for(var i=0; i < highlighter.clickX.length; ++i) {
+			var x = parseInt(highlighter.clickX[i] - (highlighter.drawMoveStart[0] - highlighter.dragEnd[0]));
+			var y = parseInt(highlighter.clickY[i] - (highlighter.drawMoveStart[1] - highlighter.dragEnd[1]));
+			var point = this.translateCoordinate(x,y);
+			highlighter.clickX[i] = point.x;
+			highlighter.clickY[i] = point.y;
+		}
 	}
 	
 	this.addClick = function(x, y, dragging, mouseup)
@@ -288,23 +268,12 @@ function Highlighter(img) {
 		    var wheel = e.wheelDelta/120;
 		    this.ratio = Math.exp(wheel*zoomIntensity);
 		    
-		    
-		    var o = {x: highlighter.originx, y: highlighter.originy};
-		    this.currentOrigin = $.extend( true, {}, o );
-		    
-		    console.log('at this point:')
-		    console.log(this.currentOrigin);
-		    
 		    // Translate so the visible origin is at the context's origin.
 		    highlighter.translate(highlighter.originx, highlighter.originy);
 		  
 		    // zoom to the point that the mouse is currently on
 		    highlighter.originx -= mx/(scale*this.ratio) - mx/scale;
 		    highlighter.originy -= my/(scale*this.ratio) - my/scale;
-		    
-		    
-		    console.log('origin changed:')
-		    console.log(this.currentOrigin);
 		    
 		    // Scale it (centered around the origin due to the previous translate).
 		    highlighter.scale(this.ratio, this.ratio);
@@ -313,6 +282,8 @@ function Highlighter(img) {
 		    
 		    // Update scale by scroll ratio
 		    scale *= this.ratio;
+		    
+//		    highlighter.updateCoordinates();
 	    
 		}
 	    
@@ -347,42 +318,45 @@ function Highlighter(img) {
 	}
 	
 	this.redrawCanvas = function(image) {
-		highlighter.clear();
-		context.fillRect(highlighter.originx,highlighter.originy,canvas.width/scale,canvas.height/scale);
-		context.drawImage(image,-highlighter.mouseX + (canvas.width / 2 - image.width / 2), -highlighter.mouseY, image.width, image.height);
-		
-		context.strokeStyle = 'rgba(228, 244, 56, .8)';
-		context.fillStyle = 'rgba(228, 244, 56, 0.35)';
-		
-		context.lineWidth = 5;
-		
-		var line_start = 0;
-		context.beginPath();
-		for(var i=0; i < highlighter.clickX.length; i++) {		
-			if(!highlighter.clickDrag[i] && !i){
-				context.moveTo(highlighter.clickX[i]-1, highlighter.clickY[i]);
-			}
+		if (highlighter.redraw == true) {
+			highlighter.clear();
+			context.fillRect(highlighter.originx,highlighter.originy,canvas.width/scale,canvas.height/scale);
+			context.drawImage(image,-highlighter.mouseX + (canvas.width / 2 - image.width / 2), -highlighter.mouseY, image.width, image.height);
 			
-			if (highlighter.clickEnd[i] == true) {
-				context.lineTo(highlighter.clickX[line_start], highlighter.clickY[line_start]);
-				context.fill();
-				context.stroke();
-				context.closePath();
-				context.beginPath();
+			context.strokeStyle = 'rgba(228, 244, 56, .8)';
+			context.fillStyle = 'rgba(228, 244, 56, 0.35)';
+			
+			context.lineWidth = 5;
+			
+			var line_start = 0;
+			context.beginPath();
+			for(var i=0; i < highlighter.clickX.length; i++) {		
+				if(!highlighter.clickDrag[i] && !i){
+					context.moveTo(highlighter.clickX[i]-1, highlighter.clickY[i]);
+				}
 				
-				line_start = i+1;						
-			}
-			
-			else {
-				context.lineTo(highlighter.clickX[i], highlighter.clickY[i]);
-				context.stroke();
-//					context.fill();
+				if (highlighter.clickEnd[i] == true) {
+					context.lineTo(highlighter.clickX[line_start], highlighter.clickY[line_start]);
+					context.fill();
+					context.stroke();
+					context.closePath();
+					context.beginPath();
+					
+					line_start = i+1;						
+				}
+				
+				else {
+					context.lineTo(highlighter.clickX[i], highlighter.clickY[i]);
+					context.stroke();
+	//					context.fill();
+				}
 			}
 		}
 
 	}
 	
 	this.image = new Image();
+//	this.image.crossOrigin = "Anonymous";
 	
 	var redrawCanvas = this.redrawCanvas;
 	this.image.onload = function() {
